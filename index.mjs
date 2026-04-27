@@ -7,10 +7,10 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 //setting up database connection pool, replace values in red
 const pool = mysql.createPool({
-    host: "your_hostname",
-    user: "your_username",
-    password: "your_password",
-    database: "your_database",
+    host: "lg7j30weuqckmw07.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PWD,
+    database: "	gbyb8vmnvqchvq92",
     connectionLimit: 10,
     waitForConnections: true
 });
