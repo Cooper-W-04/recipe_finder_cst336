@@ -33,6 +33,11 @@ app.get('/', (req, res) => {
    res.render('login.ejs')
 });
 
+// home page route 
+app.get('/home', (req, res) => {
+   res.render('home.ejs')
+});
+
 app.get('/profile', isUserAuthenticated, (req, res) => {
 
 
@@ -74,12 +79,17 @@ app.post('/loginProcess', async (req, res) => {
    if (match) {
      req.session.authenticated = true;
      req.session.fullName = rows[0].firstName + " " + rows[0].lastName;
-     res.render('welcome.ejs', {"fullName":req.session.fullName});
+     res.render('home.ejs', {"fullName":req.session.fullName});
    } else {
      let loginError = "Wrong Credentials! Try again!"
      res.render('login.ejs', {loginError});
    }
 });
+
+app.get('/signup', (req, res) => {
+   res.render('signup.ejs')
+});
+
 
 app.get("/dbTest", async(req, res) => {
    try {

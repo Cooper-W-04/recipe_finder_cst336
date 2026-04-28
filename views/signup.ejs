@@ -3,19 +3,24 @@
 
 <head>
   <%- include("partials/head.ejs")%>
-    <link rel="stylesheet" href="/css/loginStyle.css">
+<link rel="stylesheet" href="/css/loginStyle.css">
 
-    <title>Login Screen</title>
+    <title>SignUp Screen</title>
 </head>
 
 <body class="text-center">
 
   <div class="mainPage">
     <h1 class="m-5"> Recipe Finder </h1>
-    <h2>Welcome Back!</h2>
+    <!-- <h2>Welcome Back!</h2> -->
 
-    <form action="/loginProcess" method="POST">
-      <h5 class="text-center">Login to your account</h5>
+    <form action="/signUpProcess" method="POST">
+      <h5 class="text-center">Create your account</h5>
+      Full Name: 
+      <div class="loginDiv">
+        <input type="text" name="firstName">
+        <span class="bi bi-person loginIcon"></span>
+      </div><br><br>
       Username:
       <div class="loginDiv">
         <input type="text" name="username">
@@ -27,7 +32,12 @@
         <input type="password" id="pwd" name="password">
         <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
       </div><br><br>
-      <button class="btn">Login</button>
+      Confirm Password:
+      <div class="loginDiv">
+        <input type="password" id="pwd" name="">
+        <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
+      </div><br><br>
+      <button class="btn">Sign Un</button>
     </form>
 
     <% if (typeof (loginError) !=="undefined" ) { %>
@@ -37,7 +47,7 @@
       </div>
 
       <% } %>
-        <h5>Don't have an account? <a href="/signup">Sign up</a></h5>
+        <h5>Already have an account? <a href="/">Log in</a></h5>
 
 
   </div>
