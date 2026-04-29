@@ -7,19 +7,15 @@ body {
 
 .topbar {
     background: #fff;
-    padding: 18px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #e8e8e8;
     gap: 20px;
 }
 
 .logo {
-    gap: 10px;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #6f8d2f;
+    height:120px;
+    width: 120px;
 }
 
 .navLinks {

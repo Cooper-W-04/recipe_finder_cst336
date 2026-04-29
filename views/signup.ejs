@@ -11,10 +11,11 @@
 <body class="text-center">
 
   <div class="mainPage">
-    <h1 class="m-5"> Recipe Finder </h1>
+    
     <!-- <h2>Welcome Back!</h2> -->
-
+    <img src="/img/logo.png" alt="" class="logo">
     <form action="/signUpProcess" method="POST">
+      
       <h5 class="text-center">Create your account</h5>
       Full Name: 
       <div class="loginDiv">
@@ -37,7 +38,7 @@
         <input type="password" id="pwd" name="">
         <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
       </div><br><br>
-      <button class="btn">Sign Un</button>
+      <button class="btn">Sign Up</button>
     </form>
 
     <% if (typeof (loginError) !=="undefined" ) { %>
