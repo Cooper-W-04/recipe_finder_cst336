@@ -25,6 +25,25 @@ app.get("/populate", (req, res) => {
    res.render("populate.ejs");
 });
 
+app.get("/getRecipeByName",async (req,res) => {
+  // CHANGE RESPONSE TO DATABASE INSTEAD OF API
+  let ingredientName = req.query.ingredient;
+  let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredientName}`)
+  let data = await response.json()
+  let meals = data.meals
+  let error = false
+  if(data.meals==null){
+    error = true
+  }else{
+    console.log(meals)
+  }
+  res.render('recipesIngredientList.ejs',{
+    error,
+    meals,
+    ingredientName
+  })
+})
+
 app.post("/populate-db", async (req, res) => {
   try {
     //DO NOT IMPLEMENT THIS!! IT WILL COMPLETELY RESET THE DATABASE AND REMOVE ANY RECIPES THAT WERE ADDED BY USERS
