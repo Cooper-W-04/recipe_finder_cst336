@@ -236,15 +236,6 @@ function isUserAuthenticated(req, res, next) {
   }
 }
 
-//middleware functions
-function isUserAuthenticated(req, res, next) {
-  if (req.session.authenticated) {
-    next();
-  } else {
-    res.redirect("/");
-  }
-}
-
 app.listen(3000, () => {
   console.log("Express server running")
 })
