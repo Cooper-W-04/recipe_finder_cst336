@@ -31,16 +31,18 @@ app.get("/getRecipeByName",async (req,res) => {
   let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredientName}`)
   let data = await response.json()
   let meals = data.meals
-  let error = false
-  if(data.meals==null){
-    error = true
+  let errorMessage = false
+  if(ingredientName.length<3){
+    res.redirect('/') //<---make this redirect to search page once implemented
+    return
+  }else if(data.meals==null){
+    errorMessage = `Cannot find a meal containing ${ingredientName}`
   }else{
     console.log(meals)
   }
   res.render('recipesIngredientList.ejs',{
-    error,
+    errorMessage,
     meals,
-    ingredientName
   })
 })
 

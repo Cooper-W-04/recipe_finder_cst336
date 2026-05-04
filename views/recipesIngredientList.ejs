@@ -6,9 +6,9 @@
     <title>View Recipes</title>
 </head>
 <body>
-    <% if(error) {%>
+    <% if(errorMessage!=false) {%>
         <div class="errorMessage">
-            <h1> Couldn't find meal containing ' <%= ingredientName %> '  </h1>
+            <h1> <%= errorMessage %> </h1>
         </div>
     <% } else {%>
         <div>
