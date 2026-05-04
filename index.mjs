@@ -7,7 +7,7 @@ import 'dotenv/config';
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-//for Express to get values using the POST method
+
 app.use(express.urlencoded({ extended: true }));
 //setting up database connection pool, replace values in red
 const pool = mysql.createPool({
