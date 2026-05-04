@@ -5,7 +5,7 @@
   <%- include("partials/head.ejs")%>
 <link rel="stylesheet" href="/css/loginStyle.css">
 
-    <title>SignUp Screen</title>
+    <title>Recipe Finder | SignUp</title>
 </head>
 
 <body class="text-center">
@@ -17,11 +17,7 @@
     <form action="/signUpProcess" method="POST">
       
       <h5 class="text-center">Create your account</h5>
-      Full Name: 
-      <div class="loginDiv">
-        <input type="text" name="firstName">
-        <span class="bi bi-person loginIcon"></span>
-      </div><br><br>
+      
       Username:
       <div class="loginDiv">
         <input type="text" name="username">
@@ -31,20 +27,20 @@
       Password:
       <div class="loginDiv">
         <input type="password" id="pwd" name="password">
-        <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
+        <span class="bi bi-eye loginIcon" id="eyeIcon1"></span>
       </div><br><br>
       Confirm Password:
       <div class="loginDiv">
-        <input type="password" id="pwd" name="">
-        <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
+        <input type="password" id="confirmPwd" name="confirmPassword">
+        <span class="bi bi-eye loginIcon" id="eyeIcon2"></span>
       </div><br><br>
       <button class="btn">Sign Up</button>
     </form>
 
-    <% if (typeof (loginError) !=="undefined" ) { %>
+    <% if (typeof (signupError) !=="undefined" ) { %>
 
       <div class="alert">
-        <%= loginError %>
+        <%= signupError %>
       </div>
 
       <% } %>
@@ -53,7 +49,7 @@
 
   </div>
   <%- include("partials/footer.ejs")%>
-    <script src="/js/login.js"></script>
+    <script src="/js/signup.js"></script>
 
 
 </body>

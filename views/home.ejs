@@ -8,40 +8,17 @@
 </head>
 
 <body>
-
-    <header class="topbar">
-        <div>
-            <img src="/img/logo.png" alt="" class="logo">
-        </div>
-
-        <nav class="navLinks">
-            <a href="/home" class="active">Home</a>
-            <a href="#">Recipes</a>
-            <a href="#">Categories</a>
-        </nav>
-
-        <div class="topbarRight">
-            <form action="/recipes">
-                <input type="text" placeholder="Search.." class="searchBox">
-                <button class="searchBtn"><i class="bi bi-search"></i></button>
-            </form>
-            <div class="profile">
-                <span>Hello, User</span>
-                <i class="bi bi-person-circle profileImg"></i>
-
-            </div>
-        </div>
-    </header>
+    <%- include("partials/navbar.ejs") %>
 
     <section class="mainPageSection">
         <div class="card text-white">
-            <img src="https://i.pinimg.com/1200x/3c/49/44/3c494462afd9749c60b1cb29e3aaf5b4.jpg" class="card-img mainImg"
+            <img src="https://i.pinimg.com/736x/3a/b5/2e/3ab52ee4dd6e74ed4d98b4d92dd08960.jpg" class="card-img mainImg"
                 alt="Recipe dish">
             <div class="card-img-overlay">
                 <h1 class="mainPageTitle">Discover Delicious <br> Recipes Every Day</h1>
                 <p class="mainPageDesc">Find, cook and share your favorite recipes.</p>
                 <form action="/recipes">
-                    <input type="text" placeholder="Search.." class="searchRecipes">
+                    <input type="text" class="searchRecipes" name="ingredient">
                     <button class="btn"><i class="bi bi-search"></i></button>
                 </form>
             </div>
@@ -53,44 +30,10 @@
             <h2>Popular Recipes</h2>
         </div>
 
-        <div class="recipeGrid">
-            <div class="recipeCard">
-                <img src="https://i.pinimg.com/736x/f5/32/42/f53242c2611d934796665dd8fd0cb97a.jpg" alt="Pasta"
-                    class="recipeCardImg">
-                <div class="cardBody">
-                    <span class="badge">Main Course</span>
-                    <h4>Pasta</h4>
-                </div>
-            </div>
-
-            <div class="recipeCard">
-                <img src="https://i.pinimg.com/736x/f5/32/42/f53242c2611d934796665dd8fd0cb97a.jpg" alt="Pasta"
-                    class="recipeCardImg">
-                <div class="cardBody">
-                    <span class="badge">Main Course</span>
-                    <h4>Pasta</h4>
-                </div>
-            </div>
-
-            <div class="recipeCard">
-                <img src="https://i.pinimg.com/736x/f5/32/42/f53242c2611d934796665dd8fd0cb97a.jpg" alt="Pasta"
-                    class="recipeCardImg">
-                <div class="cardBody">
-                    <span class="badge">Main Course</span>
-                    <h4>Pasta</h4>
-                </div>
-            </div>
-
-            <div class="recipeCard">
-                <img src="https://i.pinimg.com/736x/f5/32/42/f53242c2611d934796665dd8fd0cb97a.jpg" alt="Pasta"
-                    class="recipeCardImg">
-                <div class="cardBody">
-                    <span class="badge">Main Course</span>
-                    <h4>Pasta</h4>
-                </div>
-            </div>
-        </div>
+        <div class="recipeGrid" id="recipeGrid"></div>
     </section>
+    <script src="/js/home.js"></script>
+
     <%- include("partials/footer.ejs") %>
 </body>
 
