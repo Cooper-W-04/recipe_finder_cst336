@@ -1,0 +1,120 @@
+
+.mainPageText {
+    padding: 60px 60px 60px 80px;
+}
+
+.mainPageTitle {
+    font-size: 4rem;
+    line-height: 1.15;
+    margin: 0 0 20px 0;
+    font-weight: bold;
+}
+
+.mainPageDesc {
+    font-size: 1.3rem;
+    color: white;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 28px;
+    /* font-weight: bold; */
+}
+
+.mainImg {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    opacity: 70%;
+}
+
+.searchRecipes {
+    width: 50%;
+    height: 50px;
+    border: 1px solid #ddd8cf;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+    box-sizing: border-box;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.searchBtn {
+    width: 50px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    background-color: #6f8d2f;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn {
+    width: 50px;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background-color: #6f8d2f;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.recipesSection {
+    padding: 20px;
+}
+
+.recipeGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.recipeCard {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+.recipeCardImg {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.recipeLink{
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding-bottom: 4px;
+    text-decoration: none;
+}
+
+.cardBody {
+    padding: 16px;
+}
+
+.badge {
+    display: inline-block;
+    background: #eef5dc;
+    color: #6f8d2f;
+    padding: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+footer {
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}

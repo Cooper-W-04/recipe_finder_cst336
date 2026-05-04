@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("partials/head.ejs")%>
+    <link rel="stylesheet" href="/css/loginStyle.css">
+
+    <title>Recipe Finder | Login</title>
+</head>
+
+<body class="text-center">
+
+  <div class="mainPage">
+    <img src="/img/logo.png" alt="" class="logo">
+    <h2>Welcome Back!</h2>
+
+    <form action="/loginProcess" method="POST">
+      <h5 class="text-center">Login to your account</h5>
+      Username:
+      <div class="loginDiv">
+        <input type="text" name="username">
+        <span class="bi bi-person loginIcon"></span>
+      </div><br><br>
+
+      Password:
+      <div class="loginDiv">
+        <input type="password" id="pwd" name="password">
+        <span class="bi bi-eye loginIcon" id="eyeIcon"></span>
+      </div><br><br>
+      <button class="btn">Log In</button>
+    </form>
+
+    <% if (typeof (loginError) !=="undefined" ) { %>
+
+      <div class="alert">
+        <%= loginError %>
+      </div>
+
+      <% } %>
+        <h5>Don't have an account? <a href="/signup">Sign up</a></h5>
+
+
+  </div>
+  <%- include("partials/footer.ejs")%>
+    <script src="/js/login.js"></script>
+
+
+</body>
+
+</html>

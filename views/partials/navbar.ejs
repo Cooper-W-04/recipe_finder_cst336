@@ -1,0 +1,23 @@
+<header class="topbar">
+    <div>
+        <img src="/img/logo.png" alt="" class="logo">
+    </div>
+
+    <nav class="navLinks">
+        <a href="/home" class="active">Home</a>
+        <a href="#">Recipes</a>
+        <a href="#">Categories</a>
+    </nav>
+
+    <div class="topbarRight">
+        <form action="/recipes">
+            <input type="text" class="searchBox" name="ingredient">
+            <button class="searchBtn"><i class="bi bi-search"></i></button>
+        </form>
+        <div class="profile">
+            <span>Hello, <%= username %></span>
+            <i class="bi bi-person-circle profileImg"></i>
+
+        </div>
+    </div>
+</header>
