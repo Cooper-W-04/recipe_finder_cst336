@@ -25,26 +25,62 @@ app.get("/populate", (req, res) => {
    res.render("populate.ejs");
 });
 
-app.get("/getRecipeByName",async (req,res) => {
-  // CHANGE RESPONSE TO DATABASE INSTEAD OF API
+app.get("/getRecipeByIngredient", async (req, res) => {
   let ingredientName = req.query.ingredient;
-  let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredientName}`)
-  let data = await response.json()
-  let meals = data.meals
-  let errorMessage = false
-  if(ingredientName.length<3){
-    res.redirect('/') //<---make this redirect to search page once implemented
-    return
-  }else if(data.meals==null){
-    errorMessage = `Cannot find a meal containing ${ingredientName}`
-  }else{
-    console.log(meals)
+  let errorMessage = false;
+
+  if (ingredientName.length < 3) {
+    res.redirect('/');
+    return;
   }
-  res.render('recipesIngredientList.ejs',{
-    errorMessage,
-    meals,
-  })
-})
+
+  let [meals] = await pool.query(
+    `SELECT recipes.recipe_id, recipes.recipe_name, recipes.instructions, recipes.category, recipes.area, recipes.image_url, recipes.source_url, recipes.youtube_url
+     FROM recipes
+     JOIN recipe_ingredients
+      ON recipes.recipe_id = recipe_ingredients.recipe_id
+     JOIN ingredients
+      ON recipe_ingredients.ingredient_id = ingredients.ingredient_id
+     WHERE ingredients.ingredient_name LIKE ?`,
+    [`%${ingredientName}%`]
+  );
+
+  if (meals.length === 0) {
+    errorMessage = `Cannot find a meal containing ${ingredientName}`;
+  }
+
+  res.render('recipesIngredientList.ejs', { errorMessage, meals});
+});
+
+app.get("/recipeDetail", async (req, res) => {
+  let recipeId = req.query.id;
+
+  let [recipeRows] = await pool.query(
+    `SELECT recipe_id, recipe_name, instructions, category, area, image_url, source_url, youtube_url
+     FROM recipes
+     WHERE recipe_id = ?`,
+    [recipeId]
+  );
+
+  if (recipeRows.length === 0) {
+    res.status(404).send("Recipe not found");
+    return;
+  }
+
+  let meal = recipeRows[0];
+
+  let [ingredients] = await pool.query(
+    `SELECT ingredients.ingredient_name AS name, recipe_ingredients.measure
+     FROM recipe_ingredients
+     JOIN ingredients 
+       ON recipe_ingredients.ingredient_id = ingredients.ingredient_id
+     WHERE recipe_ingredients.recipe_id = ?`,
+    [recipeId]
+  );
+
+  res.render("recipeDetail.ejs", { meal, ingredients });
+});
+
 
 app.post("/populate-db", async (req, res) => {
   try {

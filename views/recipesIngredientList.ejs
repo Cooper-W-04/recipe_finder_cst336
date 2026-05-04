@@ -12,22 +12,24 @@
         </div>
     <% } else {%>
         <div>
-            <% for( const meal of meals ) { %> 
-                <h1> <%= meal.strMeal %> </h1>
-                <img style="height: 100px;" src="<%= meal.strMealThumb %>">
+            <% for( let meal of meals ) { %> 
+                <h1> <%= meal.recipe_name %> </h1>
+                <img style="height: 100px;" src="<%= meal.image_url %>">
 
-                <p>
-                    <% if(meal.strInstructions.length>200){ %>
-                        <p>
-                            <%=meal.strInstructions.slice(0,200)%> ...
-                        </p>
-                    <% } else {%>
-                        <p>
-                            <%=meal.strInstructions.slice(0,meal.strInstructions.length)%> ...
-                        </p>
-                    <% } %>
-                </p>
-                <button> View Recipe </button>
+                <% let instructions = meal.instructions || ""; %>
+                <% if(instructions.length>200){ %>
+                    <p>
+                        <%=instructions.slice(0,200)%> ...
+                    </p>
+                <% } else {%>
+                    <p>
+                        <%=instructions%>
+                    </p>
+                <% } %>
+
+                <a href="/recipeDetail?id=<%= meal.recipe_id %>">
+                     <button> View Recipe </button>
+                </a>
                 <hr>
             <% } %>
         </div>
