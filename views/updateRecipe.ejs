@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Recipe</title>
+</head>
+<body>
+
+  <h1>Update Recipe</h1>
+
+  <form action="/updateRecipe" method="POST">
+    <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
+
+    <p>
+      <label>Recipe Name:</label><br>
+      <input type="text" name="recipeName" value="<%= recipe.recipe_name %>">
+    </p>
+
+    <p>
+      <label>Instructions:</label><br>
+      <textarea name="instructions" rows="8" cols="60"><%= recipe.instructions %></textarea>
+    </p>
+
+    <p>
+      <label>Category:</label><br>
+      <input type="text" name="category" value="<%= recipe.category %>">
+    </p>
+
+    <p>
+      <label>Area:</label><br>
+      <input type="text" name="area" value="<%= recipe.area %>">
+    </p>
+
+    <p>
+      <label>Image URL:</label><br>
+      <input type="text" name="imageUrl" value="<%= recipe.image_url %>">
+    </p>
+
+    <p>
+      <label>Source URL:</label><br>
+      <input type="text" name="sourceUrl" value="<%= recipe.source_url %>">
+    </p>
+
+    <p>
+      <label>YouTube URL:</label><br>
+      <input type="text" name="youtubeUrl" value="<%= recipe.youtube_url %>">
+    </p>
+
+    <button type="submit">Update Recipe</button>
+  </form>
+
+  <hr>
+
+  <h2>Current Ingredients</h2>
+
+  <% for (let ingredient of recipeIngredients) { %>
+    <div>
+      <span><%= ingredient.measure %> <%= ingredient.ingredient_name %></span>
+
+      <form action="/removeRecipeIngredient" method="POST" style="display:inline;">
+        <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
+        <input type="hidden" name="recipeIngredientId" value="<%= ingredient.recipe_ingredient_id %>">
+        <button type="submit">X</button>
+      </form>
+    </div>
+  <% } %>
+
+  <hr>
+
+  <h2>Add Ingredient</h2>
+
+  <form action="/addRecipeIngredient" method="POST">
+    <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
+
+    <select name="ingredientId">
+      <option value="select">Select ingredient</option>
+
+      <% for (let ingredient of allIngredients) { %>
+        <option value="<%= ingredient.ingredient_id %>">
+          <%= ingredient.ingredient_name %>
+        </option>
+      <% } %>
+    </select>
+
+    <input type="text" name="measure" placeholder="Measure, ex: 2 cups">
+
+    <button type="submit">Add Ingredient</button>
+  </form>
+
+  <p>
+    <a href="/recipeDetail?id=<%= recipe.recipe_id %>">Back to Recipe</a>
+  </p>
+
+</body>
+</html>

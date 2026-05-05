@@ -31,31 +31,10 @@
                         <div class="recipeLeft">
                             <img src="<%= meal.image_url %>" class="recipeImg">
 
-                            <p class="areaBadge">
-                                <%= meal.area %>
-                            </p>
-                        </div>
-
-                        <div class="recipeRight">
-                            <h2>Ingredients</h2>
-                            <ul>
-                                <% for (let ingredient of ingredients) { %>
-                                    <li>
-                                        <%= ingredient.measure %>
-                                            <%= ingredient.name %>
-                                    </li>
-                                    <% } %>
-                            </ul>
-                        </div>
-                    </div>
-                    <h2>Instructions</h2>
-                    <p>
-                        <%= meal.instructions %>
-                    </p>
-
-
-                </div>
-                <%- include("partials/footer.ejs") %>
+    <form action="/updateRecipe" method="GET">
+        <input type="hidden" name="id" value="<%= meal.recipe_id %>">
+        <button type="submit">Update Recipe</button>
+    </form>
 </body>
 
 </html>
