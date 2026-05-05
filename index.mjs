@@ -131,7 +131,7 @@ app.get("/getRecipeByIngredient", isUserAuthenticated, async (req, res) => {
   let errorMessage = false;
 
   if (ingredientName.length < 3) {
-    res.redirect('/');
+    res.redirect('/home');
     return;
   }
 

@@ -9,16 +9,29 @@
     </nav>
 
     <div class="topbarRight">
-        <form action="/getRecipeByIngredient" method="GET">
+        <form id="navBarSearchForm" action="/getRecipeByIngredient" method="GET" onsubmit="return validateForm()">
             <input type="text" class="searchBox" name="ingredient">
             <button class="searchBtn"><i class="bi bi-search"></i></button>
         </form>
+
+        <script>
+            function validateForm() {
+                let ingredient = document.forms["navBarSearchForm"]["ingredient"].value.trim();
+                console.log(ingredient.length)
+                if (ingredient.length < 3) {
+                    alert("Please enter 3 or more characters!");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+
         <div class="profile">
             <span>Hello, <%= username %>!</span>
             <i class="bi bi-person-circle profileImg"></i>
-        <form action="/logout" method="GET">
-            <button class="logOutBtn">Log Out</button>
-        </form> 
+            <form action="/logout" method="GET">
+                <button class="logOutBtn">Log Out</button>
+            </form>
         </div>
     </div>
 </header>
