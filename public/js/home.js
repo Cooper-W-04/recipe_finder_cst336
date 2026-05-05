@@ -8,7 +8,7 @@ async function getAPIData() {
 
         data.forEach(recipe => {
             let card = `
-                <a href="/recipe?id=${recipe.id}" class="recipeLink">
+                <a href="/recipeDetail?id=${recipe.recipe_id}" class="recipeLink">
                     <div class="recipeCard">
                         <img src="${recipe.image_url}" class="recipeCardImg">
                         <div class="cardBody">

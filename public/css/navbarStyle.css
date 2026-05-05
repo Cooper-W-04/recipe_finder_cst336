@@ -11,6 +11,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    padding: 5px;
 }
 
 .logo {
@@ -24,9 +25,9 @@ body {
 }
 
 .navLinks a {
-    color: #333;
-    font-size: 1rem;
-    font-weight: 500;
+    color:  #7b972c;;
+    font-size: 1.2rem;
+    font-weight: bold;
     padding-bottom: 4px;
     text-decoration: none;
 }
@@ -66,4 +67,25 @@ body {
 .profileImg {
     color: #6f8d2f;
     font-size: 2rem;
+}
+
+footer {
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+.logOutBtn {
+    width: 70px;
+    height: 60px;
+    border: none;
+    border-radius: 12px;
+    background-color: #6f8d2f;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
 }

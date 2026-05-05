@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Recipes</title>
+    <%- include("partials/head.ejs") %>
+        <title>Recipe Finder | Recipe List</title>
+        <link rel="stylesheet" href="/css/homePageStyle.css">
 </head>
+
 <body>
-    <% if(errorMessage!=false) {%>
-        <div class="errorMessage">
-            <h1> <%= errorMessage %> </h1>
-        </div>
-    <% } else {%>
-        <div>
-            <% for( let meal of meals ) { %> 
-                <h1> <%= meal.recipe_name %> </h1>
-                <img style="height: 100px;" src="<%= meal.image_url %>">
+    <%- include("partials/navbar.ejs") %>
+        <% if(errorMessage!=false) {%>
+            <div class="errorMessage">
+                <h1>
+                    <%= errorMessage %>
+                </h1>
+            </div>
+            <% } else {%>
+                <div class="recipeGrid">
+                    <% for( let meal of meals ) { %>
+                        <a href="/recipeDetail?id=<%= meal.recipe_id %>" class="recipeLink">
+                            <div class="recipeCard">
+                                <img src="<%= meal.image_url %>" class="recipeCardImg">
+                                    <div class="cardBody">
+                                        <span class="badge"">
+                                            <%= meal.area %>
+                                        </span>
+                                        <h4 style="font-weight: bold;">
+                                            <%= meal.recipe_name %>
+                                        </h4>
 
-                <% let instructions = meal.instructions || ""; %>
-                <% if(instructions.length>200){ %>
-                    <p>
-                        <%=instructions.slice(0,200)%> ...
-                    </p>
-                <% } else {%>
-                    <p>
-                        <%=instructions%>
-                    </p>
+                                        <% let instructions=meal.instructions || "" ; %>
+                                            <% if(instructions.length>90){ %>
+                                                <p>
+                                                    <%=instructions.slice(0,90)%> ...
+                                                </p>
+                                                <% } else {%>
+                                                    <p>
+                                                        <%=instructions%>
+                                                    </p>
+                                                    <% } %>
+                                    </div>
+                            </div>
+                        </a>
+                        <% } %>
+                </div>
                 <% } %>
-
-                <a href="/recipeDetail?id=<%= meal.recipe_id %>">
-                     <button> View Recipe </button>
-                </a>
-                <hr>
-            <% } %>
-        </div>
-    <% } %>
+                    <%- include("partials/footer.ejs") %>
 </body>
+
 </html>

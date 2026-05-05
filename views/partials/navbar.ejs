@@ -4,20 +4,21 @@
     </div>
 
     <nav class="navLinks">
-        <a href="/home" class="active">Home</a>
-        <a href="#">Recipes</a>
-        <a href="#">Categories</a>
+        <a href="/home">Home</a>
+        <a href="/addRecipe">Add Recipes</a>
     </nav>
 
     <div class="topbarRight">
-        <form action="/recipes">
+        <form action="/getRecipeByIngredient" method="GET">
             <input type="text" class="searchBox" name="ingredient">
             <button class="searchBtn"><i class="bi bi-search"></i></button>
         </form>
         <div class="profile">
-            <span>Hello, <%= username %></span>
+            <span>Hello!!</span>
             <i class="bi bi-person-circle profileImg"></i>
-
+        <form action="/logout" method="GET">
+            <button class="logOutBtn">Log Out</button>
+        </form> 
         </div>
     </div>
 </header>

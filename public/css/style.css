@@ -1,9 +1,0 @@
-#toastMessage {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: green;
-    color: white;
-    padding: 12px 16px;
-    border-radius: 6px;
-}
