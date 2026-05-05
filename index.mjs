@@ -62,8 +62,8 @@ app.post('/loginProcess', async (req, res) => {
 
   if (match) {
     req.session.authenticated = true;
-    let name = rows[0].username;
-    res.render('home.ejs', { username });
+    req.session.username = rows[0].username;
+    res.redirect('/home');
   } else {
     let loginError = "Wrong Credentials! Try again!"
     res.render('login.ejs', { loginError });
