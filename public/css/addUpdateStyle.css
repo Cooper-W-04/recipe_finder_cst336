@@ -1,6 +1,19 @@
 button{
-     width: 200px;
-    height: 52px;
+    width: 150px;
+    height: 45px;
+    border: none;
+    border-radius: 12px;
+    background-color: #6f8d2f;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.ingBtns{
+    width: 30px;
+    height: 25px;
     border: none;
     border-radius: 12px;
     background-color: #6f8d2f;
@@ -24,6 +37,12 @@ h1{
 
 label{
     font-weight: bold;
+}
+
+select{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 30px;
 }
 
 textarea{

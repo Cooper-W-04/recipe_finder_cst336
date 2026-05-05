@@ -1,75 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Update Recipe</title>
+  <head>
+    <%- include("partials/head.ejs") %>
+        <title>Recipe Finder | Add Recipe</title>
+        <link rel="stylesheet" href="/css/homePageStyle.css">
+        <link rel="stylesheet" href="/css/addUpdateStyle.css">
 </head>
+
 <body>
+    <%- include("partials/navbar.ejs") %>
 
-  <h1>Update Recipe</h1>
-
+  
+ <div class="main">
   <form action="/updateRecipe" method="POST">
+    <h1>Update Recipe</h1>
     <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
 
     <p>
-      <label>Recipe Name:</label><br>
+      <label>Recipe Name:</label>
       <input type="text" name="recipeName" value="<%= recipe.recipe_name %>">
     </p>
 
     <p>
-      <label>Instructions:</label><br>
+      <label>Instructions:</label>
       <textarea name="instructions" rows="8" cols="60"><%= recipe.instructions %></textarea>
     </p>
 
     <p>
-      <label>Category:</label><br>
+      <label>Category:</label>
       <input type="text" name="category" value="<%= recipe.category %>">
     </p>
 
     <p>
-      <label>Area:</label><br>
+      <label>Area:</label>
       <input type="text" name="area" value="<%= recipe.area %>">
     </p>
 
     <p>
-      <label>Image URL:</label><br>
+      <label>Image URL:</label>
       <input type="text" name="imageUrl" value="<%= recipe.image_url %>">
     </p>
 
     <p>
-      <label>Source URL:</label><br>
+      <label>Source URL:</label>
       <input type="text" name="sourceUrl" value="<%= recipe.source_url %>">
     </p>
 
     <p>
-      <label>YouTube URL:</label><br>
+      <label>YouTube URL:</label>
       <input type="text" name="youtubeUrl" value="<%= recipe.youtube_url %>">
     </p>
 
     <button type="submit">Update Recipe</button>
   </form>
-
+  </div>
   <hr>
 
-  <h2>Current Ingredients</h2>
+  <div >
+  
+  <h1 style="text-align: center;">Current Ingredients</h1>
 
   <% for (let ingredient of recipeIngredients) { %>
-    <div>
+    <div class="main">
       <span><%= ingredient.measure %> <%= ingredient.ingredient_name %></span>
 
       <form action="/removeRecipeIngredient" method="POST" style="display:inline;">
         <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
         <input type="hidden" name="recipeIngredientId" value="<%= ingredient.recipe_ingredient_id %>">
-        <button type="submit">X</button>
+        <button type="submit" class="ingBtns">X</button>
       </form>
     </div>
   <% } %>
-
+</div>
   <hr>
 
-  <h2>Add Ingredient</h2>
+  <div class="main">
+  
 
   <form action="/addRecipeIngredient" method="POST">
+    <h1>Add Ingredient</h1>
     <input type="hidden" name="recipeId" value="<%= recipe.recipe_id %>">
 
     <select name="ingredientId">
@@ -86,10 +95,9 @@
 
     <button type="submit">Add Ingredient</button>
   </form>
-
-  <p>
-    <a href="/recipeDetail?id=<%= recipe.recipe_id %>">Back to Recipe</a>
-  </p>
+  </div>
+<%- include("partials/footer.ejs") %>
+  
 
 </body>
 </html>
