@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add Your Recipe</h1>
+
+    <form action="/addRecipe" method="POST">
+        <label>Recipe Name:</label>
+        <input type="text" name="recipeName" required>
+
+        <br><br>
+
+        <label>Category:</label>
+        <input type="text" name="category" required>
+
+        <br><br>
+
+        <label>Area / Country:</label>
+        <input type="text" name="area" required>
+
+        <br><br>
+
+        <label>Image URL:</label>
+        <input type="text" name="imageUrl" required>
+
+        <br><br>
+
+
+        <label>Instructions:</label>
+        <textarea name="instructions" required></textarea>
+
+        <br><br>
+
+        <label>Ingredients:</label>
+        <p>Enter one ingredient per line using this format: Measure | Ingredient</p>
+        <textarea name="ingredients" required></textarea>
+
+        <br><br>
+
+        <button type="submit">Add Recipe</button>
+    </form>
+</body>
+</html>

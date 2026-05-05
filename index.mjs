@@ -78,8 +78,91 @@ app.get("/recipeDetail", async (req, res) => {
     [recipeId]
   );
 
-  res.render("recipeDetail.ejs", { meal, ingredients });
+  // res.render("recipeDetail.ejs", { meal, ingredients });
+  let successMessage = false;
+
+  //check if coming from add recipe page and if so show success message
+  if (req.query.added === "true") {
+    successMessage = "Recipe was successfully added!";
+  }
+
+  res.render("recipeDetail.ejs", { meal, ingredients, successMessage });
 });
+
+app.get("/addRecipe", (req, res) => {
+  res.render("addRecipe.ejs");
+});
+
+app.post("/addRecipe", async (req, res) => {
+  let recipeName = req.body.recipeName;
+  let instructions = req.body.instructions;
+  let category = req.body.category;
+  let area = req.body.area;
+  let imageUrl = req.body.imageUrl;
+  let ingredients = req.body.ingredients;
+
+  let sql = `INSERT INTO recipes
+             (recipe_name, instructions, category, area, image_url)
+             VALUES
+             (?, ?, ?, ?, ?)`;
+
+  let sqlParams = [recipeName, instructions, category, area, imageUrl];
+
+  //add recipe to recipes table and get the id of the new recipe so we can link it to the ingredients in the recipe_ingredients table
+  const [rows] = await pool.query(sql, sqlParams);
+
+  let recipeId = rows.insertId;
+
+  //each line is measurement and ingredient name
+  let ingredientLines = ingredients.split("\n");
+
+  //do this for every line of ingredients that the user entered in the textarea
+  for (let line of ingredientLines) {
+    //make sure there are ingredients on the line and that the line isn't just empty spaces
+    if (line.trim() !== "") {
+      //2 cups|Flour -> ["2 cups", "Flour"]
+      let ingredientParts = line.split("|");
+
+      let measure = ingredientParts[0].trim();
+      let ingredientName = ingredientParts[1].trim();
+
+      //add ingredient to ingredients table if not already in ingredients table
+      let ingredientSql = `INSERT IGNORE INTO ingredients
+                           (ingredient_name)
+                           VALUES
+                           (?)`;
+
+      let ingredientSqlParams = [ingredientName];
+      //add ingredient to ingredients table
+      await pool.query(ingredientSql, ingredientSqlParams);
+
+      //find that ingredient's id so we can add it to the recipe_ingredients table
+      let findIngredientSql = `SELECT ingredient_id
+                               FROM ingredients
+                               WHERE ingredient_name = ?`;
+
+      let findIngredientSqlParams = [ingredientName];
+      //finds ingredient id of the ingredient we just added
+      const [ingredientRows] = await pool.query(findIngredientSql, findIngredientSqlParams);
+
+      //grab ingredient id from the query result
+      let ingredientId = ingredientRows[0].ingredient_id;
+
+      //add to recipe_ingredients table to link the recipe and ingredient together
+      let recipeIngredientSql = `INSERT INTO recipe_ingredients
+                                 (recipe_id, ingredient_id, measure)
+                                 VALUES
+                                 (?, ?, ?)`;
+
+      let recipeIngredientSqlParams = [recipeId, ingredientId, measure];
+      //adds recipe and ingredient to recipe_ingredients table
+      await pool.query(recipeIngredientSql, recipeIngredientSqlParams);
+    }
+  }
+
+  res.redirect(`/recipeDetail?id=${recipeId}&added=true`);
+});
+
 
 
 app.post("/populate-db", async (req, res) => {
