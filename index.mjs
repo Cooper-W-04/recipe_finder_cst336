@@ -140,11 +140,31 @@ app.post("/populate-db", async (req, res) => {
     await pool.query("DELETE FROM ingredients");
     await pool.query("DELETE FROM recipes");
 
-    //fetch recipes from TheMealDB
-    const response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=");
-    const data = await response.json();
+    let mealIds = new Set();
 
-    const meals = data.meals;
+    //fetch recipes from TheMealDB
+    for (let code = 97; code <= 122; code++) {
+      let letter = String.fromCharCode(code);
+      let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`);
+      let data = await response.json();
+
+      if (data.meals) {
+        for (let meal of data.meals) {
+          mealIds.add(meal.idMeal);
+        }
+      }
+    }
+
+    const meals = [];
+
+    for (let mealId of mealIds) {
+      let response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`);
+      let data = await response.json();
+
+      if (data.meals && data.meals.length > 0) {
+        meals.push(data.meals[0]);
+      }
+    }
 
     //loop through recipes
     for (let meal of meals) {
@@ -152,12 +172,11 @@ app.post("/populate-db", async (req, res) => {
       //insert into recipes table
       let sql = `
         INSERT INTO recipes
-        (recipe_id, recipe_name, instructions, category, area, image_url, source_url, youtube_url)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        (recipe_name, instructions, category, area, image_url, source_url, youtube_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
 
       let params = [
-        meal.idMeal,
         meal.strMeal,
         meal.strInstructions,
         meal.strCategory,
@@ -167,7 +186,8 @@ app.post("/populate-db", async (req, res) => {
         meal.strYoutube || null
       ];
 
-      await pool.query(sql, params);
+      const [recipeResult] = await pool.query(sql, params);
+      const newRecipeId = recipeResult.insertId;
 
       //loop through ingredients (1–20)
       for (let i = 1; i <= 20; i++) {
@@ -175,6 +195,8 @@ app.post("/populate-db", async (req, res) => {
         let measure = meal[`strMeasure${i}`];
 
         if (ingredient && ingredient.trim() !== "") {
+          ingredient = ingredient.trim();
+          measure = measure && measure.trim() !== "" ? measure.trim() : null;
 
           //check if ingredient already exists
           let [rows] = await pool.query(
@@ -187,17 +209,17 @@ app.post("/populate-db", async (req, res) => {
           if (rows.length > 0) {
             ingredientId = rows[0].ingredient_id;
           } else {
-            let result = await pool.query(
+            let [result] = await pool.query(
               "INSERT INTO ingredients (ingredient_name) VALUES (?)",
               [ingredient]
             );
-            ingredientId = result[0].insertId;
+            ingredientId = result.insertId;
           }
 
           //insert into recipe_ingredients
           await pool.query(
-            "INSERT IGNORE INTO recipe_ingredients (recipe_id, ingredient_id, measure) VALUES (?, ?, ?)",
-            [meal.idMeal, ingredientId, measure]
+            "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, measure) VALUES (?, ?, ?)",
+            [newRecipeId, ingredientId, measure]
           );
         }
       }
@@ -205,7 +227,7 @@ app.post("/populate-db", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Database populated successfully!"
+      message: `Database populated successfully! Added ${meals.length} recipes.`
     });
 
   } catch (err) {
