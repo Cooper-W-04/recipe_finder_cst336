@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= meal.recipe_name %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <% if (successMessage) { %>
+    <div id="toastMessage">
+        <%= successMessage %>
+    </div>
+    <script>
+        //hide the toast message after 3 seconds
+        setTimeout(() => {
+            document.querySelector("#toastMessage").style.display = "none";
+        }, 3000);
+    </script>
+    <% } %>
+
+    <h1><%= meal.recipe_name %></h1>
+
+    <img style="height: 200px;" src="<%= meal.image_url %>">
+
+    <h2>Area / Country</h2>
+    <p><%= meal.area %></p>
+
+    <h2>Ingredients</h2>
+    <ul>
+        <% for (let ingredient of ingredients) { %>
+            <li><%= ingredient.measure %> <%= ingredient.name %></li>
+        <% } %>
+    </ul>
+
+    <h2>Instructions</h2>
+    <p><%= meal.instructions %></p>
+
+</body>
+</html>
