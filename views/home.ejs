@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("partials/head.ejs") %>
+        <title>Recipe Finder | Home</title>
+        <link rel="stylesheet" href="/css/homePageStyle.css">
+</head>
+
+<body>
+    <%- include("partials/navbar.ejs") %>
+
+    <section class="mainPageSection">
+        <div class="card text-white">
+            <img src="https://i.pinimg.com/736x/3a/b5/2e/3ab52ee4dd6e74ed4d98b4d92dd08960.jpg" class="card-img mainImg"
+                alt="Recipe dish">
+            <div class="card-img-overlay">
+                <h1 class="mainPageTitle">Discover Delicious <br> Recipes Every Day</h1>
+                <p class="mainPageDesc">Find, cook and share your favorite recipes.</p>
+                <form action="/recipes">
+                    <input type="text" class="searchRecipes" name="ingredient">
+                    <button class="btn"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="recipesSection">
+        <div>
+            <h2>Popular Recipes</h2>
+        </div>
+
+        <div class="recipeGrid" id="recipeGrid"></div>
+    </section>
+    <script src="/js/home.js"></script>
+
+    <%- include("partials/footer.ejs") %>
+</body>
+
+</html>
