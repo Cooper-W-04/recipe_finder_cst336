@@ -36,5 +36,9 @@
     <h2>Instructions</h2>
     <p><%= meal.instructions %></p>
 
+    <form action="/updateRecipe" method="GET">
+        <input type="hidden" name="id" value="<%= meal.recipe_id %>">
+        <button type="submit">Update Recipe</button>
+    </form>
 </body>
 </html>

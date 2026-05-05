@@ -192,6 +192,123 @@ app.get("/recipeDetail", async (req, res) => {
   res.render("recipeDetail.ejs", { meal, ingredients, successMessage });
 });
 
+app.get("/updateRecipe", async (req, res) => {
+  let recipeId = req.query.id;
+
+  let [recipeRows] = await pool.query(
+    `SELECT recipe_id, recipe_name, instructions, category, area, image_url, source_url, youtube_url
+     FROM recipes
+     WHERE recipe_id = ?`,
+    [recipeId]
+  );
+
+  if (recipeRows.length === 0) {
+    res.status(404).send("Recipe not found");
+    return;
+  }
+
+  let recipe = recipeRows[0];
+
+  let [recipeIngredients] = await pool.query(
+    `SELECT recipe_ingredients.recipe_ingredient_id,
+            ingredients.ingredient_id,
+            ingredients.ingredient_name,
+            recipe_ingredients.measure
+     FROM recipe_ingredients
+     JOIN ingredients
+       ON recipe_ingredients.ingredient_id = ingredients.ingredient_id
+     WHERE recipe_ingredients.recipe_id = ?`,
+    [recipeId]
+  );
+
+  let [allIngredients] = await pool.query(
+    `SELECT ingredient_id, ingredient_name
+     FROM ingredients
+     ORDER BY ingredient_name`
+  );
+
+  res.render("updateRecipe.ejs", { recipe, recipeIngredients, allIngredients });
+});
+
+app.post("/updateRecipe", async (req, res) => {
+  let recipeId = req.body.recipeId;
+  let recipeName = req.body.recipeName;
+  let instructions = req.body.instructions;
+  let category = req.body.category;
+  let area = req.body.area;
+  let imageUrl = req.body.imageUrl;
+  let sourceUrl = req.body.sourceUrl;
+  let youtubeUrl = req.body.youtubeUrl;
+
+  let sql = `UPDATE recipes
+             SET recipe_name = ?,
+                 instructions = ?,
+                 category = ?,
+                 area = ?,
+                 image_url = ?,
+                 source_url = ?,
+                 youtube_url = ?
+             WHERE recipe_id = ?`;
+
+  let sqlParams = [
+    recipeName,
+    instructions,
+    category,
+    area,
+    imageUrl,
+    sourceUrl,
+    youtubeUrl,
+    recipeId
+  ];
+
+  await pool.query(sql, sqlParams);
+
+  res.redirect(`/recipeDetail?id=${recipeId}&updated=true`);
+});
+
+app.post("/addRecipeIngredient", async (req, res) => {
+  let recipeId = req.body.recipeId;
+  let ingredientId = req.body.ingredientId;
+  let measure = req.body.measure;
+
+  if (!ingredientId || ingredientId === "select") {
+    return res.redirect(`/updateRecipe?id=${recipeId}`);
+  }
+
+  let [existingRows] = await pool.query(
+    `SELECT *
+     FROM recipe_ingredients
+     WHERE recipe_id = ?
+       AND ingredient_id = ?`,
+    [recipeId, ingredientId]
+  );
+
+  if (existingRows.length === 0) {
+    await pool.query(
+      `INSERT INTO recipe_ingredients
+       (recipe_id, ingredient_id, measure)
+       VALUES
+       (?, ?, ?)`,
+      [recipeId, ingredientId, measure || null]
+    );
+  }
+
+  res.redirect(`/updateRecipe?id=${recipeId}`);
+});
+
+app.post("/removeRecipeIngredient", async (req, res) => {
+  let recipeId = req.body.recipeId;
+  let recipeIngredientId = req.body.recipeIngredientId;
+
+  await pool.query(
+    `DELETE FROM recipe_ingredients
+     WHERE recipe_ingredient_id = ?`,
+    [recipeIngredientId]
+  );
+
+  res.redirect(`/updateRecipe?id=${recipeId}`);
+});
+
 app.get("/addRecipe", (req, res) => {
   res.render("addRecipe.ejs");
 });
