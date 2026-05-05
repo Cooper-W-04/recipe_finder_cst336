@@ -28,33 +28,37 @@
                         <%= meal.recipe_name %>
                     </h1>
 
-                    <img style="height: 200px;" src="<%= meal.image_url %>">
+                    <div class="inst">
+                        <div class="recipeLeft">
+                            <img src="<%= meal.image_url %>" class="recipeImg">
 
-                    <h2>Area / Country</h2>
-                    <p>
-                        <%= meal.area %>
-                    </p>
+                            <p class="areaBadge">
+                                <%= meal.area %>
+                            </p>
+                        </div>
 
-                    <h2>Ingredients</h2>
-                    <ul>
-                        <% for (let ingredient of ingredients) { %>
-                            <li>
-                                <%= ingredient.measure %>
-                                    <%= ingredient.name %>
-                            </li>
-                            <% } %>
-                    </ul>
-
+                        <div class="recipeRight">
+                            <h2>Ingredients</h2>
+                            <ul>
+                                <% for (let ingredient of ingredients) { %>
+                                    <li>
+                                        <%= ingredient.measure %>
+                                            <%= ingredient.name %>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                        </div>
+                    </div>
                     <h2>Instructions</h2>
                     <p>
                         <%= meal.instructions %>
                     </p>
-
                     <form action="/updateRecipe" method="GET">
                         <input type="hidden" name="id" value="<%= meal.recipe_id %>">
-                        <button type="submit">Update Recipe</button>
+                        <button type="submit" class="areaBtn">Update Recipe</button>
                     </form>
                 </div>
+                <%- include("partials/footer.ejs") %>
 </body>
 
 </html>

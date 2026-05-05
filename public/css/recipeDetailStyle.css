@@ -33,6 +33,10 @@ h1{
     font-weight: bold;
 }
 
+h2{
+    font-weight: bold;
+}
+
 .recipeImg {
     width: 500px;
     height: 500px;
@@ -51,5 +55,18 @@ h1{
     font-size: 1.0rem;
     font-weight: 700;
     margin-bottom: 12px;
-      border: #3d4e1c;
+    border: #3d4e1c;
+}
+
+.areaBtn {
+     width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    background-color: #6f8d2f;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
 }
