@@ -27,6 +27,8 @@ app.use(session({
   //   cookie: { secure: true }
 }))
 
+app.use(getUsername);
+
 //routes
 app.get('/', (req, res) => {
   res.render('login.ejs')
@@ -37,12 +39,8 @@ app.get('/logout', (req, res) => {
   res.redirect("/");
 });
 
-app.get('/profile', isUserAuthenticated, (req, res) => {
-  res.render('profile.ejs')
-});
-
-app.get('/settings', isUserAuthenticated, (req, res) => {
-  res.render("settings.ejs")
+app.get('/home', isUserAuthenticated, (req, res) => {
+  res.render('home.ejs')
 });
 
 //route that checks username and password
@@ -128,7 +126,7 @@ app.get("/populate", (req, res) => {
   res.render("populate.ejs");
 });
 
-app.get("/getRecipeByIngredient", async (req, res) => {
+app.get("/getRecipeByIngredient", isUserAuthenticated, async (req, res) => {
   let ingredientName = req.query.ingredient;
   let errorMessage = false;
 
@@ -155,7 +153,7 @@ app.get("/getRecipeByIngredient", async (req, res) => {
   res.render('recipesIngredientList.ejs', { errorMessage, meals});
 });
 
-app.get("/recipeDetail", async (req, res) => {
+app.get("/recipeDetail", isUserAuthenticated, async (req, res) => {
   let recipeId = req.query.id;
 
   let [recipeRows] = await pool.query(
@@ -192,11 +190,11 @@ app.get("/recipeDetail", async (req, res) => {
   res.render("recipeDetail.ejs", { meal, ingredients, successMessage });
 });
 
-app.get("/addRecipe", (req, res) => {
+app.get("/addRecipe", isUserAuthenticated, (req, res) => {
   res.render("addRecipe.ejs");
 });
 
-app.post("/addRecipe", async (req, res) => {
+app.post("/addRecipe", isUserAuthenticated, async (req, res) => {
   let recipeName = req.body.recipeName;
   let instructions = req.body.instructions;
   let category = req.body.category;
@@ -396,6 +394,11 @@ function isUserAuthenticated(req, res, next) {
   } else {
     res.redirect("/");
   }
+}
+
+function getUsername(req, res, next) {
+   res.locals.username = req.session.username || "";
+   next(); //next middleware/route
 }
 
 app.listen(3000, () => {

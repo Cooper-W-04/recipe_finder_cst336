@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include("partials/head.ejs") %>
+        <title>Recipe Finder | Add Recipe</title>
+        <link rel="stylesheet" href="/css/homePageStyle.css">
+        <link rel="stylesheet" href="/css/addUpdateStyle.css">
 </head>
+
 <body>
-    <h1>Add Your Recipe</h1>
+    <%- include("partials/navbar.ejs") %>
+    <div class="main">
+    
 
     <form action="/addRecipe" method="POST">
+        <h1>Add Your Recipe</h1>
         <label>Recipe Name:</label>
         <input type="text" name="recipeName" required>
 
@@ -43,5 +48,7 @@
 
         <button type="submit">Add Recipe</button>
     </form>
+    </div>
+     <%- include("partials/footer.ejs") %>
 </body>
 </html>
