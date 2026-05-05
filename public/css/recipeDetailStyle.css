@@ -1,0 +1,55 @@
+#toastMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: green;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+}
+
+.recipe{
+     padding: 16px 16px;
+     margin: 8px;
+}
+
+.inst{
+    padding: 12px 16px;
+    display: flex;
+}
+
+.recipeLeft{
+    width: 50%;
+
+}
+
+.recipeRight{
+    width: 50%;
+   
+   
+}
+
+h1{
+    font-weight: bold;
+}
+
+.recipeImg {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    padding: 12px 16px;
+    border-radius: 5%;
+  
+}
+
+.areaBadge {
+    display: inline-block;
+    background: #eef5dc;
+    color: #6f8d2f;
+    padding: 8px;
+    font-size: 1.0rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+      border: #3d4e1c;
+}
